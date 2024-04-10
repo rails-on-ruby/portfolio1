@@ -1,5 +1,4 @@
 body {
-
     font-family: 'Courier New', Courier, monospace;
     background-image: url("stars.png");
     background-repeat: repeat;
@@ -7,9 +6,7 @@ body {
     background-position: fixed;
     color: white;
     text-align: center;
-
-
-
+    cursor: crosshair;
 }
 
 h1 {
@@ -24,21 +21,27 @@ h1:hover {
 }
 
 h2 {
-    font-size: 20px;
- 
+    font-size: 18x;
+    font-weight: lighter;
+    transition: letter-spacing 3s ease;
+}
+
+h2:hover {
+    letter-spacing: 0.25em;
 }
 
 p {
     font-size: 16px;
 }
 
-footer {
-    font-size: 14px;
+footer p {
+    font-size: 12px;
+    text-align: center;
+    line-height: 10%;
+
+
 }
 
-footer li {
-    list-style-type: none;
-}
 
 nav {
     margin-top: 0.3em;
@@ -51,23 +54,29 @@ nav li {
     text-align: center;
     padding: 0.5em;
     list-style-type: none;
-
 }
 
-a:active, a:after, a:visited, a {
+nav a:active, a:after, a:visited, a {
     font-size: 18px;
     color: cyan;
     text-decoration: none;
     text-align: center;
+    transition: font-size 2s ease;
 }
 
-a:hover {
+nav a:hover {
     color: gold;
     text-decoration: none;
+    font-size: 22px;
 }
 
 #container {
     background-color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 1em;
+    text-align: center;
+    padding-top: 1.4em;
+    padding-bottom: 0;
+
 }
 
 /* type writer?? */
