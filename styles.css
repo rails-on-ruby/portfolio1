@@ -1,0 +1,104 @@
+body {
+
+    font-family: 'Courier New', Courier, monospace;
+    background-image: url("stars.png");
+    background-repeat: repeat;
+    background-color: black;
+    background-position: fixed;
+    color: white;
+    text-align: center;
+
+
+
+}
+
+h1 {
+    font-size: 42px;
+    margin-top: 0.5em;
+    margin-bottom: 0.4em;
+    transition: font-size 4s ease;
+}
+
+h1:hover {
+    font-size: 56px;
+}
+
+h2 {
+    font-size: 20px;
+ 
+}
+
+p {
+    font-size: 16px;
+}
+
+footer {
+    font-size: 14px;
+}
+
+footer li {
+    list-style-type: none;
+}
+
+nav {
+    margin-top: 0.3em;
+    display: block;
+    
+}
+
+nav li {
+    display:inline-block;
+    text-align: center;
+    padding: 0.5em;
+    list-style-type: none;
+
+}
+
+a:active, a:after, a:visited, a {
+    font-size: 18px;
+    color: cyan;
+    text-decoration: none;
+    text-align: center;
+}
+
+a:hover {
+    color: gold;
+    text-decoration: none;
+}
+
+#container {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* type writer?? */
+
+.typebox {
+    height: 100vh;
+    /*This part is important for centering*/
+    display: grid;
+    place-items: center;
+    margin-top: -220px;
+    margin-bottom: -230px;
+  }
+  
+  p.typed {
+    width: 22ch;
+    animation: typing 2s steps(22), blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+    font-size: 1.2em;
+  }
+  
+  @keyframes typing {
+    from {
+      width: 0
+    }
+  }
+      
+  @keyframes blink {
+    50% {
+      border-color: transparent
+    }
+  }
