@@ -2,16 +2,33 @@
 <head>
     <title>Contact</title>
     <link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
-    <div class="container">
+    <div id="container">
         <header>
          <h1>Contact Me</h1>
          <p>Madie Pewitt</p>
          <p>contact@madiepewitt.com</p>
          <p>123-456-7890</p>
          <img src="./giphy.gif" alt="shooting star animation" width="10%"/>
-    </div>
+         <h2>Or leave a message at the tone...</h2>
+         <form onsubmit="false" action="" method="post">
+            <label for="name">First and Last Name</label>
+            <input type="text" id="name" name="name" placeholder="First and Last Name" required>
+            <br>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" placeholder="yourname@email.com" required>
+            <br>
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone number" placeholder="123-456-7890">
+            <br>
+            <textarea name="message" rows="3" required>
+            </textarea>
+            <br>
+            <button onclick="sendContact()";>Submit</button>
+         </form>
+
         </header>
         <nav>
             <ul>
@@ -20,5 +37,7 @@
                 <li><a href="./about.html">About</a></li>
             </ul>
         </nav>
+    </div>
+<script src="script.js"></script>
 </body>
 </html>
