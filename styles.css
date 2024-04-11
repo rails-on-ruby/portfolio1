@@ -71,6 +71,7 @@ nav li {
 
 nav a:active, a:after, a:visited, a {
     font-size: 18px;
+    cursor: crosshair;
     color: cyan;
     text-decoration: none;
     text-align: center;
@@ -81,6 +82,7 @@ nav a:active, a:after, a:visited, a {
 
 nav a:hover {
     color: gold;
+    cursor: crosshair;
     text-decoration: none;
     font-size: 22px;
     letter-spacing: 0.125em;
