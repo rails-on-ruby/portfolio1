@@ -9,8 +9,17 @@ body {
     cursor: crosshair;
 }
 
-a:hover {
+footer a {
+    color: cyan;
+    font-size: 14px;
+    transition: letter-spacing 2s ease,
+                color 2s ease;
+}
+
+footer a:hover {
     cursor: crosshair;
+    color: gold;
+    letter-spacing: 0.125em;
 }
 
 h1 {
@@ -66,7 +75,8 @@ nav a:active, a:after, a:visited, a {
     text-decoration: none;
     text-align: center;
     transition: font-size 2s ease,
-                letter-spacing 2s ease;
+                letter-spacing 2s ease,
+                color 2s ease;
 }
 
 nav a:hover {
