@@ -7,54 +7,25 @@ body {
     color: white;
     text-align: center;
     cursor: crosshair;
-}
-
-footer a {
-    color: cyan;
-    font-size: 14px;
-    transition: letter-spacing 2s ease,
-                color 2s ease;
-}
-
-footer a:hover {
-    cursor: crosshair;
-    color: gold;
-    letter-spacing: 0.125em;
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
-    font-size: 42px;
+    font-size: 40px;
     margin-top: 0.5em;
     margin-bottom: 0.4em;
-    transition: font-size 4s ease,
-                letter-spacing 4s ease;
-}
-
-h1:hover {
-    font-size: 56px;
-    letter-spacing: 0.25em;
+    font-weight: 400; 
 }
 
 h2 {
     font-size: 18x;
     font-weight: lighter;
-    transition: letter-spacing 3s ease;
-}
-
-h2:hover {
-    letter-spacing: 0.25em;
 }
 
 p {
     font-size: 16px;
 }
-
-footer p {
-    font-size: 12px;
-    text-align: center;
-    line-height: 0.5em;
-}
-
 
 nav {
     margin-top: 0.3em;
@@ -75,9 +46,6 @@ nav a:active, a:after, a:visited, a {
     color: cyan;
     text-decoration: none;
     text-align: center;
-    transition: font-size 2s ease,
-                letter-spacing 2s ease,
-                color 2s ease;
 }
 
 nav a:hover {
@@ -85,7 +53,22 @@ nav a:hover {
     cursor: crosshair;
     text-decoration: none;
     font-size: 22px;
-    letter-spacing: 0.125em;
+} 
+
+
+footer a {
+    color: cyan;
+    font-size: 14px;
+}
+
+footer a:hover {
+    color: gold;
+}
+
+footer p {
+    font-size: 12px;
+    text-align: center;
+    line-height: 0.5em;
 }
 
 #container {
@@ -94,7 +77,6 @@ nav a:hover {
     text-align: center;
     padding-top: 1.4em;
     padding-bottom: 0;
-
 }
 
 /* type writer */
@@ -128,3 +110,73 @@ nav a:hover {
       border-color: transparent
     }
   }
+
+/* mobile version */ 
+
+  @media only screen and (max-width: 600px) {
+
+    .typebox { 
+        margin-top: -30vh;
+        padding-top: 0;
+    }
+
+    .container {
+        padding-top: 0;
+        margin-top: 1vh;
+    }
+
+    nav {
+        background-color: rgba(255, 255, 255, 0.05);
+        transition: none;
+    }
+
+
+    nav a {  
+        font-size: 18px;    
+    }
+
+    nav a:hover {
+        font-size: 18px;
+    }
+  }
+
+  
+/* desktop version animations: */
+
+@media only screen and (min-width: 600px) {
+    nav a:active, a:after, a:visited, a {
+        transition: font-size 2s ease,
+        letter-spacing 2s ease,
+        color 2s ease;      
+    }
+    nav a:hover {
+        letter-spacing: 0.125em;
+    } 
+
+    h1 {
+        transition: font-size 4s ease,
+                letter-spacing 4s ease;
+    }
+
+    h1:hover {
+        letter-spacing: 0.25em;
+    }
+
+    h2 {
+        transition: letter-spacing 3s ease;
+    }
+
+    h2:hover {
+        letter-spacing: 0.25em;
+    }
+
+    footer a {
+        transition: letter-spacing 2s ease,
+                    color 2s ease;
+    }
+    
+    footer a:hover {
+        letter-spacing: 0.125em;
+    }
+
+}
