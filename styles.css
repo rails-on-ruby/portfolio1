@@ -29,7 +29,10 @@ p {
 
 nav {
     margin-top: 0.3em;
+    width: 100%;
     display: block;
+    position: relative;
+
     
 }
 
@@ -38,6 +41,8 @@ nav li {
     text-align: center;
     padding: 0.5em;
     list-style-type: none;
+    position: relative;
+    right: 2vh;
 }
 
 nav a:active, a:after, a:visited, a {
@@ -55,6 +60,10 @@ nav a:hover {
     font-size: 22px;
 } 
 
+footer {
+    margin: 0;
+    padding: 0;
+}
 
 footer a {
     color: cyan;
@@ -73,7 +82,8 @@ footer p {
 
 #container {
     background-color: rgba(0, 0, 0, 0.8);
-    margin-bottom: 1em;
+    height: 100vh;
+    margin-bottom: 0;
     text-align: center;
     padding-top: 1.4em;
     padding-bottom: 0;
@@ -85,8 +95,8 @@ footer p {
     height: 100vh;
     display: grid;
     place-items: center;
-    margin-top: -220px;
-    margin-bottom: -230px;
+    margin-top: -40vh;
+    margin-bottom: -40vh;
   }
   
   p.typed {
