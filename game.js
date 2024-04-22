@@ -86,6 +86,28 @@ class Projectile {
 
 //end projectile class
 
+class InvaderProjectile {
+    constructor ({position, velocity}) {
+        this.position = position;
+        this.velocity = velocity;
+        this.height = 10;
+        this.width = 3;
+    }
+
+    draw(){
+        c.fillStyle = 'white';
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    }
+
+    update(){
+        this.draw();
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+    }
+}
+
+//end invader projectile class
+
 class Invader {
     constructor({position}) {
     this.velocity = {
@@ -122,6 +144,21 @@ class Invader {
             this.position.x += velocity.x;
             this.position.y += velocity.y;
         }
+    }
+
+    shoot(invaderProjectiles){
+        invaderProjectiles.push(new InvaderProjectile({
+            position: {
+                x: this.position.x + this.width / 2,
+                y: this.position.y + this.height,
+
+            },
+            velocity : {
+                x: 0,
+                y: 5
+            }
+        }))
+
     }
 }
 
@@ -173,6 +210,7 @@ class Grid {
 const player = new Player();
 const projectiles = [];
 const grids = [];
+const invaderProjectiles = [];
 const keys = {
     a: {
         pressed: false
@@ -192,6 +230,9 @@ function animate() {
     c.fillStyle = 'black';
     c.fillRect(0, 0, canvas.width, canvas.height);
     player.update();
+    invaderProjectiles.forEach((invaderProjectile) => {
+        invaderProjectile.update();
+    })
 
     projectiles.forEach((projectile, index) => {
         if (projectile.position.y + projectile.radius <= 0) {
@@ -204,8 +245,13 @@ function animate() {
 
     })
 
-    grids.forEach((grid) => {
+    grids.forEach((grid, gridIndex) => {
         grid.update();
+        //spawn projectiles
+        if (frames % 100 === 0 && grid.invaders.length > 0) {
+            grid.invaders[Math.floor(Math.random()* grid.invaders.length)].shoot(
+                invaderProjectiles)
+        }
         grid.invaders.forEach((invader, i) => {
             invader.update({ velocity: grid.velocity })
 
@@ -217,24 +263,25 @@ function animate() {
                     && projectile.position.y + projectile.radius >= invader.position.y
                 ){
                     setTimeout(() => {
-                        /* const invaderFound = grid.invaders.find(invader2) => invader2 === invader
+                        const invaderFound = grid.invaders.find((invader2) => invader2 === invader)
                         
-                        const projectileFound = projectile.find(projectile2) => projectile2 === projectile
-                        )
-
-                        remove invader and projectile
+                        const projectileFound = projectiles.find((projectile2) => projectile2 === projectile)
+                        
                         if(invaderFound && projectileFound) { 
 
-*/
+
                         grid.invaders.splice(i, 1)
                         projectiles.splice(j, 1)
 
-                         /*if (grid.invaders.length > 0) {
+                         if (grid.invaders.length > 0) {
                             const firstInvader = grid.invaders[0];
                             const lastInvader = grid.invaders[grid.invaders.length - 1];
                             grid.width = lastInvader.position.x - firstInvader.position.x + lastInvader.width;
-                            grid.position.x = firstInvader.position.x; */
-                         
+                            grid.position.x = firstInvader.position.x; 
+                            }
+                        } else {
+                            grids.splice(gridIndex, 1)
+                        }
                     }, 0)
                 }
             })
@@ -298,15 +345,12 @@ addEventListener('keydown', ({ key }) => {
 addEventListener('keyup', ({ key }) => {
     switch (key) {
         case 'a':
-            console.log('left');
             keys.a.pressed = false
             break;
         case 'd':
-            console.log('right');
             keys.d.pressed = false
             break;
         case ' ':
-            console.log('space');
             keys.space.pressed = false
             break;
     }
