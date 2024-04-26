@@ -1,0 +1,55 @@
+body {
+    margin: 0;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+nav {
+    margin-top: 0.3em;
+    display: block;
+    
+}
+
+nav li {
+    display:inline-block;
+    text-align: center;
+    padding: 0.5em;
+    list-style-type: none;
+    align-items: center;
+    text-transform: capitalize;
+}
+
+nav a:active, a:after, a:visited, a {
+    font-size: 18px;
+    cursor: crosshair;
+    color: cyan;
+    text-decoration: none;
+    text-align: center;
+}
+
+nav a:hover {
+    color: gold;
+    cursor: crosshair;
+    text-decoration: none;
+    font-size: 22px;
+} 
+nav a:active, a:after, a:visited, a {
+    transition: font-size 2s ease,
+    letter-spacing 2s ease,
+    color 2s ease;      
+}
+nav a:hover {
+    letter-spacing: 0.125em;
+} 
+
+p {
+    position: absolute; 
+    z-index: 10; 
+    color: white; 
+    left: 20px; 
+    top: 20px; 
+    margin: 0; 
+    font-family:'Courier New', Courier, monospace;
+}
