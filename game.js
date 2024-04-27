@@ -254,7 +254,7 @@ let game = {
 }
 
 // background particles
-for (let i= 0; i < 100; i++ ) {
+/* for (let i= 0; i < 100; i++ ) {
     particles.push(new Particle({
         position: {
             x: Math.random() * canvas.width,
@@ -268,6 +268,7 @@ for (let i= 0; i < 100; i++ ) {
         color: 'white'
     }))
 }
+*/
 
 function createParticles({object, color, fades}) {
     for (let i= 0; i < 15; i++ ) {
