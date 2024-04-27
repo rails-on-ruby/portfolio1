@@ -1,9 +1,11 @@
+//canvas setup
 const canvas = document.querySelector('canvas');
 const scoreEl = document.querySelector('#scoreEl');
+const playAgain = document.querySelector('#replay');
 const c = canvas.getContext('2d');
-
 canvas.width = 1024;
 canvas.height = 500;
+
 
 class Player {
     constructor() {
@@ -195,6 +197,7 @@ class Grid {
             this.velocity.y = 30;  
         }
 
+
     }
 }
 
@@ -254,7 +257,7 @@ let game = {
 }
 
 // background particles
-/* for (let i= 0; i < 100; i++ ) {
+for (let i= 0; i < 100; i++ ) {
     particles.push(new Particle({
         position: {
             x: Math.random() * canvas.width,
@@ -268,7 +271,7 @@ let game = {
         color: 'white'
     }))
 }
-*/
+
 
 function createParticles({object, color, fades}) {
     for (let i= 0; i < 15; i++ ) {
@@ -291,36 +294,39 @@ function createParticles({object, color, fades}) {
 function animate() {
     if (!game.active) return
     requestAnimationFrame(animate);
+
     c.fillStyle = 'black';
     c.fillRect(0, 0, canvas.width, canvas.height);
     player.update();
+
+  
+
     particles.forEach((particle, i) => {
-        if (particle.position.y - particle.radius >= canvas.height) {
-            particle.position.x = Math.random() * canvas.width;
-            particle.position.y = -particle.radius
+        if (particle.position.y - particle.radius >= canvas.height) /* if particle goes off screen */ {
+            particle.position.x = Math.random() * canvas.width;     /* randomize its new position */
+            particle.position.y = -particle.radius                 
         }
 
-        if (particle.opacity <= 0) {
-            setTimeout(() => {
+        if (particle.opacity <= 0) {       /* remove particle from array after it fades */
+            setTimeout(() => {             
             particles.splice(i, 1)
         }, 0)
         } else {
             particle.update();
         }
     })
+
     invaderProjectiles.forEach((invaderProjectile, index) => {
         if (
-            invaderProjectile.position.y + invaderProjectile.height >= canvas.height)
-            {
+            invaderProjectile.position.y + invaderProjectile.height >= canvas.height)  /* remove invader projectile from array after */
+            {                                                                          /* it goes off screen */
                 setTimeout(() => {
                     invaderProjectiles.splice(index, 1)
                 }, 0)
              } else {invaderProjectile.update()}
 
-
-             //if projectile hits player
-        if (
-            invaderProjectile.position.y + invaderProjectile.height >= player.position.y 
+        if ( /*if projectile hits player*/
+            invaderProjectile.position.y + invaderProjectile.height >= player.position.y      
             && invaderProjectile.position.x + invaderProjectile.width >= player.position.x 
             && invaderProjectile.position.x <= player.position.x + player.width) 
             {
@@ -329,7 +335,7 @@ function animate() {
                     color: 'white',
                     fades: true
                 });
-                setTimeout(() => {
+                setTimeout(() => {  /* remove faded particles from array and end the game */
                     invaderProjectiles.splice(index, 1);
                     player.opacity = 0;
                     game.over = true
@@ -338,11 +344,13 @@ function animate() {
                     game.active = false
                 }, 2000)
                 console.log('GAME OVER');
+                playAgain.style.display = 'block';
+
             }
     })
 
     projectiles.forEach((projectile, index) => {
-        if (projectile.position.y + projectile.radius <= 0) {
+        if (projectile.position.y + projectile.radius <= 0) {  /* remove projectile from array after it goes off screen */
             setTimeout(() => {
             projectiles.splice(index, 1)
         }, 0) 
@@ -361,23 +369,25 @@ function animate() {
         }
         grid.invaders.forEach((invader, i) => {
             invader.update({ velocity: grid.velocity })
+            
 
-            projectiles.forEach((projectile, j) => {
+        
+
+            projectiles.forEach((projectile, j) => { /* kill enemies */
                 if (
                     projectile.position.y - projectile.radius <= invader.position.y + invader.height 
                     && projectile.position.x + projectile.radius >= invader.position.x 
                     && projectile.position.x - projectile.radius <= invader.position.x + invader.width
                     && projectile.position.y + projectile.radius >= invader.position.y
                 ){
-                    //remove enemies
                     setTimeout(() => {
                         const invaderFound = grid.invaders.find((invader2) => invader2 === invader)
-                        
                         const projectileFound = projectiles.find((projectile2) => projectile2 === projectile)
                         
                         if(invaderFound && projectileFound) { 
                             score += 100;
                             scoreEl.innerHTML = score;
+                            console.log(grid.invaders)
 
                             createParticles({
                                 object: invader,
@@ -402,7 +412,6 @@ function animate() {
         })
     })
 
-        
 
     if(keys.a.pressed && player.position.x >= 0) {
 
