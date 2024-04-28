@@ -46,6 +46,7 @@ nav a:hover {
     font-size: 22px;
 } 
 nav a:active, a:after, a:visited, a {
+    font-size: 18px;
     transition: font-size 2s ease,
     letter-spacing 2s ease,
     color 2s ease;      
