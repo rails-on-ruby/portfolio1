@@ -18,9 +18,9 @@ class Player {
     this.rotation = 0;
 
     const image = new Image();
-    image.src = './spaceship.png';
+    image.src = './xwing.png';
     image.onload = () => {
-        const scale = 0.15;
+        const scale = 1;
         this.image = image;
         this.width = image.width * scale;
         this.height = image.height * scale;
@@ -67,13 +67,13 @@ class Projectile {
     constructor ({position, velocity}) {
         this.position = position;
         this.velocity = velocity;
-        this.radius = 3;
+        this.radius = 4;
     }
 
     draw(){
         c.beginPath();
         c.arc(this.position.x, this.position.y, this.radius, 0,Math.PI * 2);
-        c.fillStyle = 'red';
+        c.fillStyle = 'cyan';
         c.fill();
         c.closePath();
     }
@@ -86,15 +86,15 @@ class Projectile {
 }
 
 class InvaderProjectile {
-    constructor ({position, velocity}) {
+    constructor ({position, velocity,}) {
         this.position = position;
         this.velocity = velocity;
-        this.height = 10;
-        this.width = 3;
+        this.height = 18;
+        this.width = 4;
     }
 
     draw(){
-        c.fillStyle = 'white';
+        c.fillStyle = 'red';
         c.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
@@ -112,7 +112,7 @@ class Invader {
         y: 0
     }
     const image = new Image();
-    image.src = './invader.png';
+    image.src = './bomber.png';
     image.onload = () => {
         const scale = 1;
         this.image = image;
@@ -171,17 +171,17 @@ class Grid {
         }
         this.invaders = []
 
-        const columns = Math.floor(Math.random() * 10 + 2);
+        const columns = Math.floor(Math.random() * 7 + 2);
         const rows = Math.floor(Math.random() * 5 + 2);
-        this.width = columns * 30;
+        this.width = columns * 51;
 
         for (let x = 0; x < columns; x++) {
             for (let y = 0; y < rows; y++) {
                 this.invaders.push(
                     new Invader({
                         position: {
-                            x: x * 30,
-                            y: y * 30
+                            x: x * 51,
+                            y: y * 51
                         }
                     })
                 );
@@ -285,7 +285,7 @@ function createParticles({object, color, fades}) {
                 y: (Math.random() - 0.5) * 2
             },
             radius: Math.random() * 3,
-            color: color || '#BAA0DE',
+            color: color || 'grey',
             fades: true
         }))
     }
@@ -384,7 +384,7 @@ function animate() {
                         if(invaderFound && projectileFound) { 
                             score += 100;
                             scoreEl.innerHTML = score;
-                            console.log(grid.invaders)
+                      
 
                             createParticles({
                                 object: invader,
@@ -403,7 +403,7 @@ function animate() {
                         } else {
                             grids.splice(gridIndex, 1)
                         }
-                        if (grid.invaders.position.y >= player.position.y + player.height) {
+                        if (invader.position.y >= player.position.y + player.height) {
                             playAgain.style.display = 'block'; // end the game if invaders get too close to player
                         }
             
