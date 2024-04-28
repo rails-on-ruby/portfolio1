@@ -20,7 +20,7 @@ nav {
     padding: 10px;
     text-align: center;
     transform: translate(-50%, -1%);
-    width: 100%;S
+    width: 100%;
 }
 
 nav li {
@@ -28,6 +28,7 @@ nav li {
     text-align: center;
     text-transform: capitalize;
     padding: 2.35em;
+    overflow: hidden;
 }
 
 nav a:active, a:after, a:visited, a {
