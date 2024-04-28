@@ -26,7 +26,7 @@ nav li {
     display:inline-block;
     text-align: center;
     text-transform: capitalize;
-    padding: 2.5em;
+    padding: 2.35em;
 }
 
 nav a:active, a:after, a:visited, a {
@@ -68,6 +68,7 @@ nav a:hover {
     position: absolute;
     z-index: 11;
     color: red;
+    text-shadow: 3px 3px #000;
     margin: 0;
     justify-content: center;
     align-items: center;
@@ -77,6 +78,10 @@ nav a:hover {
     padding: 10px;
     text-align: center;
 
+}
+
+#REPLAY a{
+    color: cyan;
 }
 
 #REPLAY a:hover {

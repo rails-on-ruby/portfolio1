@@ -3,7 +3,7 @@ const canvas = document.querySelector('canvas');
 const scoreEl = document.querySelector('#scoreEl');
 const playAgain = document.querySelector('#replay');
 const c = canvas.getContext('2d');
-canvas.width = 1024;
+canvas.width = innerWidth;
 canvas.height = 500;
 
 
@@ -343,7 +343,6 @@ function animate() {
                 setTimeout(() => {
                     game.active = false
                 }, 2000)
-                console.log('GAME OVER');
                 playAgain.style.display = 'block';
 
             }
@@ -369,11 +368,9 @@ function animate() {
         }
         grid.invaders.forEach((invader, i) => {
             invader.update({ velocity: grid.velocity })
-            
-
-        
-
+    
             projectiles.forEach((projectile, j) => { /* kill enemies */
+
                 if (
                     projectile.position.y - projectile.radius <= invader.position.y + invader.height 
                     && projectile.position.x + projectile.radius >= invader.position.x 
@@ -406,11 +403,18 @@ function animate() {
                         } else {
                             grids.splice(gridIndex, 1)
                         }
+                        if (grid.invaders.position.y >= player.position.y + player.height) {
+                            playAgain.style.display = 'block'; // end the game if invaders get too close to player
+                        }
+            
                     }, 0)
                 }
             })
+            
         })
+        
     })
+
 
 
     if(keys.a.pressed && player.position.x >= 0) {
