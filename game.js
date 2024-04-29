@@ -437,6 +437,7 @@ function animate() {
         grids.push(new Grid())
     }
     frames++;
+    console.log(frames)
 }
 
 

@@ -5,10 +5,11 @@ body {
     align-items: center;
     background-color: black;
     font-family:'Courier New', Courier, monospace;
+    cursor: crosshair;
 }
 
 canvas {
-    top: 10%;
+    margin-top: 6%;
 }
 
 nav {
@@ -54,6 +55,7 @@ nav a:active, a:after, a:visited, a {
 nav a:hover {
     letter-spacing: 0.125em;
 } 
+
 
 #scoreboard {
     position: absolute; 
