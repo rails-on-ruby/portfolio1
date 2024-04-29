@@ -62,8 +62,8 @@ nav a:hover {
     z-index: 10; 
     color: white; 
     left: 50%; 
-    top: 90%; 
-    transform: translate(-50%, -90%);
+    top: 95%; 
+    transform: translate(-50%, -95%);
     margin: 0; 
     font-family:'Courier New', Courier, monospace;
 }
