@@ -2,6 +2,7 @@
 const canvas = document.querySelector('canvas');
 const scoreEl = document.querySelector('#scoreEl');
 const playAgain = document.querySelector('#replay');
+const scoreBoard = document.querySelector('#scoreboard');
 const c = canvas.getContext('2d');
 canvas.width = (innerWidth - 100);
 canvas.height = 500;
@@ -344,6 +345,7 @@ function animate() {
                     game.active = false
                 }, 2000)
                 playAgain.style.display = 'block';
+                scoreBoard.style.fontSize = 38;
 
             }
     })

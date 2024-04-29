@@ -32,7 +32,7 @@ nav li {
 }
 
 nav a:active, a:after, a:visited, a {
-    font-size: 18px;
+    font-size: 16px;
     cursor: crosshair;
     color: cyan;
     text-decoration: none;
