@@ -3,7 +3,7 @@ const canvas = document.querySelector('canvas');
 const scoreEl = document.querySelector('#scoreEl');
 const playAgain = document.querySelector('#replay');
 const c = canvas.getContext('2d');
-canvas.width = innerWidth;
+canvas.width = (innerWidth - 100);
 canvas.height = 500;
 
 
