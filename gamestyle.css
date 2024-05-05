@@ -37,6 +37,9 @@ nav a:active, a:after, a:visited, a {
     color: cyan;
     text-decoration: none;
     text-align: center;
+    transition: font-size 2s ease,
+    letter-spacing 2s ease,
+    color 2s ease;   
 }
 
 nav a:hover {
@@ -44,17 +47,8 @@ nav a:hover {
     cursor: crosshair;
     text-decoration: none;
     font-size: 22px;
-} 
-nav a:active, a:after, a:visited, a {
-    font-size: 18px;
-    transition: font-size 2s ease,
-    letter-spacing 2s ease,
-    color 2s ease;      
-}
-nav a:hover {
     letter-spacing: 0.125em;
 } 
-
 
 #scoreboard {
     position: absolute; 

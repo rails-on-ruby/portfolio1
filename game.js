@@ -7,6 +7,7 @@ const c = canvas.getContext('2d');
 canvas.width = (innerWidth - 100);
 canvas.height = 500;
 
+// TRASH CLEANUP NOT WORKING PROPERLY- MAY BE CAUSE OF LOW FRAME RATE AND GLITCHES
 
 class Player {
     constructor() {
@@ -257,7 +258,7 @@ let game = {
     active: true
 }
 
-// background particles
+// background particles        ---  ?auto trash cleanup because loop only runs when <100
 for (let i= 0; i < 100; i++ ) {
     particles.push(new Particle({
         position: {
@@ -309,22 +310,24 @@ function animate() {
         }
 
         if (particle.opacity <= 0) {       /* remove particle from array after it fades */
-            setTimeout(() => {             
+            setTimeout(() => {            
             particles.splice(i, 1)
         }, 0)
         } else {
             particle.update();
-        }
+        } 
+        // console.log(particles); particles array maxes out at 100 -- working correctly
     })
 
-    invaderProjectiles.forEach((invaderProjectile, index) => {
-        if (
+    invaderProjectiles.forEach((invaderProjectile, index) => { 
+        if ( //trash cleanup working properly
             invaderProjectile.position.y + invaderProjectile.height >= canvas.height)  /* remove invader projectile from array after */
             {                                                                          /* it goes off screen */
                 setTimeout(() => {
                     invaderProjectiles.splice(index, 1)
                 }, 0)
              } else {invaderProjectile.update()}
+   
 
         if ( /*if projectile hits player*/
             invaderProjectile.position.y + invaderProjectile.height >= player.position.y      
@@ -358,7 +361,7 @@ function animate() {
         } else {
             projectile.update()
         }
-
+       // console.log(projectiles); working properly
     })
 
     grids.forEach((grid, gridIndex) => {
