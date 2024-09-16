@@ -1,4 +1,3 @@
-//canvas setup
 const canvas = document.querySelector('canvas');
 const scoreEl = document.querySelector('#scoreEl');
 const playAgain = document.querySelector('#replay');
@@ -6,8 +5,6 @@ const scoreBoard = document.querySelector('#scoreboard');
 const c = canvas.getContext('2d');
 canvas.width = (innerWidth - 100);
 canvas.height = 500;
-
-// TRASH CLEANUP NOT WORKING PROPERLY- MAY BE CAUSE OF LOW FRAME RATE AND GLITCHES
 
 class Player {
     constructor() {
@@ -22,7 +19,7 @@ class Player {
     const image = new Image();
     image.src = './xwing.png';
     image.onload = () => {
-        const scale = 1;
+        const scale = 0.75;
         this.image = image;
         this.width = image.width * scale;
         this.height = image.height * scale;
@@ -69,7 +66,7 @@ class Projectile {
     constructor ({position, velocity}) {
         this.position = position;
         this.velocity = velocity;
-        this.radius = 4;
+        this.radius = 3;
     }
 
     draw(){
@@ -84,6 +81,7 @@ class Projectile {
         this.draw();
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
+        
     }
 }
 
@@ -232,7 +230,6 @@ class Particle {
             }
     }
 }
-
 // variables
 const player = new Player();
 let frames = 0;
@@ -258,7 +255,6 @@ let game = {
     active: true
 }
 
-// background particles        ---  ?auto trash cleanup because loop only runs when <100
 for (let i= 0; i < 100; i++ ) {
     particles.push(new Particle({
         position: {
@@ -293,157 +289,131 @@ function createParticles({object, color, fades}) {
     }
 }
 
+function collisionDetection(invader, projectile) {
+    let collisionDetected = false;
+    projectiles.forEach((projectile, i) => {
+        if (
+        projectile.position.y - projectile.radius <= invader.position.y + invader.height 
+        && projectile.position.x + projectile.radius >= invader.position.x 
+        && projectile.position.x - projectile.radius <= invader.position.x + invader.width
+        && projectile.position.y + projectile.radius >= invader.position.y
+        ) {
+            let collisionDetected = true;
+        } else {
+            let collisionDetected = false;
+        }
+    })
+    return collisionDetected;
+}
+
 function animate() {
-    if (!game.active) return
+    if (!game.active) return;
     requestAnimationFrame(animate);
 
     c.fillStyle = 'black';
     c.fillRect(0, 0, canvas.width, canvas.height);
-    player.update();
-
-  
-
-    particles.forEach((particle, i) => {
-        if (particle.position.y - particle.radius >= canvas.height) /* if particle goes off screen */ {
-            particle.position.x = Math.random() * canvas.width;     /* randomize its new position */
-            particle.position.y = -particle.radius                 
-        }
-
-        if (particle.opacity <= 0) {       /* remove particle from array after it fades */
-            setTimeout(() => {            
-            particles.splice(i, 1)
-        }, 0)
-        } else {
-            particle.update();
-        } 
-        // console.log(particles); particles array maxes out at 100 -- working correctly
-    })
-
-    invaderProjectiles.forEach((invaderProjectile, index) => { 
-        if ( //trash cleanup working properly
-            invaderProjectile.position.y + invaderProjectile.height >= canvas.height)  /* remove invader projectile from array after */
-            {                                                                          /* it goes off screen */
-                setTimeout(() => {
-                    invaderProjectiles.splice(index, 1)
-                }, 0)
-             } else {invaderProjectile.update()}
-   
-
-        if ( /*if projectile hits player*/
-            invaderProjectile.position.y + invaderProjectile.height >= player.position.y      
-            && invaderProjectile.position.x + invaderProjectile.width >= player.position.x 
-            && invaderProjectile.position.x <= player.position.x + player.width) 
-            {
-                createParticles({
-                    object: player,
-                    color: 'white',
-                    fades: true
-                });
-                setTimeout(() => {  /* remove faded particles from array and end the game */
-                    invaderProjectiles.splice(index, 1);
-                    player.opacity = 0;
-                    game.over = true
-                }, 0)
-                setTimeout(() => {
-                    game.active = false
-                }, 2000)
-                playAgain.style.display = 'block';
-                scoreBoard.style.fontSize = 38;
-
-            }
-    })
-
-    projectiles.forEach((projectile, index) => {
-        if (projectile.position.y + projectile.radius <= 0) {  /* remove projectile from array after it goes off screen */
-            setTimeout(() => {
-            projectiles.splice(index, 1)
-        }, 0) 
-        } else {
-            projectile.update()
-        }
-       // console.log(projectiles); working properly
-    })
-
-    grids.forEach((grid, gridIndex) => {
-        grid.update();
-        //spawn projectiles
-        if (frames % 100 === 0 && grid.invaders.length > 0) {
-            grid.invaders[Math.floor(Math.random()* grid.invaders.length)].shoot(
-                invaderProjectiles)
-        }
-        grid.invaders.forEach((invader, i) => {
-            invader.update({ velocity: grid.velocity })
-    
-            projectiles.forEach((projectile, j) => { /* kill enemies */
-
-                if (
-                    projectile.position.y - projectile.radius <= invader.position.y + invader.height 
-                    && projectile.position.x + projectile.radius >= invader.position.x 
-                    && projectile.position.x - projectile.radius <= invader.position.x + invader.width
-                    && projectile.position.y + projectile.radius >= invader.position.y
-                ){
-                    setTimeout(() => {
-                        const invaderFound = grid.invaders.find((invader2) => invader2 === invader)
-                        const projectileFound = projectiles.find((projectile2) => projectile2 === projectile)
-                        
-                        if(invaderFound && projectileFound) { 
-                            score += 100;
-                            scoreEl.innerHTML = score;
-                      
-
-                            createParticles({
-                                object: invader,
-                                fades: true
-                            });
-        
-                        grid.invaders.splice(i, 1)
-                        projectiles.splice(j, 1)
-
-                         if (grid.invaders.length > 0) {
-                            const firstInvader = grid.invaders[0];
-                            const lastInvader = grid.invaders[grid.invaders.length - 1];
-                            grid.width = lastInvader.position.x - firstInvader.position.x + lastInvader.width;
-                            grid.position.x = firstInvader.position.x; 
-                            }
-                        } else {
-                            grids.splice(gridIndex, 1)
-                        }
-                        if (invader.position.y >= player.position.y + player.height) {
-                            playAgain.style.display = 'block'; // end the game if invaders get too close to player
-                        }
-            
-                    }, 0)
-                }
-            })
-            
-        })
-        
-    })
-
-
 
     if(keys.a.pressed && player.position.x >= 0) {
-
         player.velocity.x = -7;
         player.rotation = -0.15;
-
+    
     } else if (keys.d.pressed && player.position.x + player.width <= canvas.width) {
-
         player.velocity.x = 7;
         player.rotation = 0.15;
-
+    
     } else { 
         player.velocity.x = 0;
         player.rotation = 0;
     }
+    
+    player.update();
 
-    //spawn enemies
+    // Update and draw particles
+    particles.forEach((particle, i) => {
+        if (particle.position.y - particle.radius >= canvas.height || particle.opacity <= 0) {
+            particles.splice(i, 1); // Remove faded particles
+            return;
+        }
+        particle.update();
+    });
+
+    // Update and draw projectiles
+    projectiles.forEach((projectile, index) => {
+        if (projectile.position.y + projectile.radius <= 0) {
+            projectiles.splice(index, 1); // Remove projectiles that go off-screen
+            return;
+        }
+        projectile.update();
+
+        })
+
+
+    // Update and draw invaders
+    grids.forEach((grid, gridIndex) => {
+        let collisionDetected = false;
+        grid.update();
+
+        
+        invaderProjectiles.forEach((invaderProjectile, i) => {
+        if (invaderProjectile.position.x + invaderProjectile.width < 0 || invaderProjectile.position.x > canvas.width) {
+            // Skip drawing if invaderProjectile is off-screen
+            return;
+        }
+        invaderProjectile.update();
+            
+        if (frames % 100 === 0 && grid.invaders.length > 0) {
+            grid.invaders[Math.floor(Math.random()* grid.invaders.length)].shoot(
+                invaderProjectiles)
+        } 
+        })
+
+        grid.invaders.forEach((invader, i) => {
+            if (invader.position.x + invader.width < 0 || invader.position.x > canvas.width) {
+                // Skip drawing if invader is off-screen
+                return;
+            }
+            invader.update({ velocity: grid.velocity });
+
+            if (grid.invaders.length > 0) {
+                const firstInvader = grid.invaders[0];
+                const lastInvader = grid.invaders[grid.invaders.length - 1];
+                grid.width = lastInvader.position.x - firstInvader.position.x + lastInvader.width;
+                grid.position.x = firstInvader.position.x; 
+            }
+        projectiles.forEach((projectile, i) => {
+
+            collisionDetection(invader, projectile);
+            if (collisionDetected === true) {
+                // code to delete invaders
+                grid.invaders.splice(i, 1);
+                projectiles.splice(i, 1);
+                createParticles({
+                    object: invader,
+                    fades: true
+                });
+                score += 100;
+                scoreEl.innerHTML = score;
+            }
+
+            if (collisionDetected === false) {
+                // No collision detected for this grid, keep it
+            } else {
+                if (grid.invaders.length === 0) {
+                    const gridIndex = grids.indexOf(grid);
+                    grids.splice(gridIndex, 1);
+                }
+            }
+            
+        })
+    })
+})
+
     if (frames % randomInterval === 0 ) {
         grids.push(new Grid())
     }
     frames++;
-    console.log(frames)
 }
+
 
 
 animate();
@@ -451,28 +421,27 @@ animate();
 addEventListener('keydown', ({ key }) => {
     if (game.over) return
     switch (key) {
-        case 'a': 
-            keys.a.pressed = true
-            break;
-        case 'd':
-            keys.d.pressed = true
-            break;
-        case ' ':
-            keys.space.pressed = true
-            projectiles.push(
-                new Projectile({
-                    position : {
-                        x: player.position.x + player.width / 2,
-                        y: player.position.y
+    case 'a': 
+        keys.a.pressed = true
+        break;
+    case 'd':
+        keys.d.pressed = true
+        break;
+    case ' ':
+        keys.space.pressed = true
+        projectiles.push(
+            new Projectile({
+                position : {
+                x: player.position.x + player.width / 2,
+                y: player.position.y
                     },
-                    velocity: {
-                        x: 0,
-                        y: -10
+                velocity: {
+                x: 0,
+                y: -10
                     }
-            })
-            )
-
-            break;
+        })
+        )
+        break;
     }
 })
 
